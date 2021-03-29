@@ -3,7 +3,7 @@
 replicaCount: 1
 revisionHistoryLimit: 3
 image:
-  repository: registry.hub.docker.com/swagatpanda/innovate-transactions
+  repository: registry.hub.docker.com/akashmallipeddi/innovate-transactions
   tag: v1.0.0
   pullPolicy: Always
   resources:
