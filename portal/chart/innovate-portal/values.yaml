@@ -3,7 +3,7 @@
 replicaCount: 1
 revisionHistoryLimit: 3
 image:
-  repository: registry.hub.docker.com/swagatpanda/innovate-portal
+  repository: registry.hub.docker.com/akashmallipeddi/innovate-portal
   tag: v1.0.0
   pullPolicy: Always
   resources:
