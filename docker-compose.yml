@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  portal:
+    build: ./portal/
+    image: akashmallipeddi/innovate-portal:v2.0.0
+  accounts:
+    build: ./accounts/
+    image: akashmallipeddi/innovate-accounts:v2.0.0
+  authentication:
+    build: ./authentication/
+    image: akashmallipeddi/innovate-authentication:v2.0.0
+  bills:
+    build: ./bills/
+    image: akashmallipeddi/innovate-bills:v2.0.0
+  transactions:
+    build: ./transactions/
+    image: akashmallipeddi/innovate-transactions:v2.0.0
+  userbase:
+    build: ./userbase/
+    image: akashmallipeddi/innovate-userbase:v2.0.0    
+        
