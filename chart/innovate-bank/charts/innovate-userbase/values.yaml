@@ -3,8 +3,6 @@
 replicaCount: 1
 revisionHistoryLimit: 3
 image:
-  repository: registry.hub.docker.com/akashmallipeddi/innovate-portal
-  tag: v1.0.0
   pullPolicy: Always
   resources:
     requests:
@@ -16,8 +14,8 @@ livenessProbe:
 service:
   name: Node
   type: NodePort
-  servicePort: 3100
-  serviceNodePort: 30200
+  servicePort: 4100
+  serviceNodePort: 30050
 hpa:
   enabled: false
   minReplicas: 2
