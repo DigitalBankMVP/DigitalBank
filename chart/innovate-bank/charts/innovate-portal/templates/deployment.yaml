@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{  .Chart.Name }}-deployment"
+  labels:
+    chart: '{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}'
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
+  selector:
+    matchLabels:
+      app: "{{  .Chart.Name }}-selector"
+  template:
+    metadata:
+      labels:
+        app: "{{  .Chart.Name }}-selector"
+    spec:
+      containers:
+      - name: "{{  .Chart.Name  }}"
+        image: "{{ .Values.global.image.repository }}/innovate-portal:{{ .Values.global.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: {{ .Values.service.servicePort }}
+          initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds}}
+          periodSeconds: {{ .Values.livenessProbe.periodSeconds}}
+        resources:
+          requests:
+            cpu: "{{ .Values.image.resources.requests.cpu }}"
+            memory: "{{ .Values.image.resources.requests.memory }}"
+        env:
+          - name: PORT
+            value : "{{ .Values.service.servicePort }}"
+          - name: MONGO_URL
+            value : "mongodb://{{ .Values.global.mongodb.Username }}:{{ .Values.global.mongodb.Password }}@{{ .Values.global.mongodb.Service }}:{{ .Values.global.mongodb.Port }}"
+          - name: BASE_PATH
+            value : "{{ .Values.global.config.BaseUrl }}"
+      initContainers:
+      - name: init-mongodb
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup innovate-bank-mongodb.default.svc.cluster.local; do echo waiting for mongodb; sleep 2; done"]

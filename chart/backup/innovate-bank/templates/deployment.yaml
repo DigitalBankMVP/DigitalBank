@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: "{{  .Chart.Name }}-deployment"
@@ -12,6 +12,9 @@ spec:
       maxUnavailable: 0
       maxSurge: 1
   revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
+  selector:
+    matchLabels:
+      app: "{{  .Chart.Name }}-selector"
   template:
     metadata:
       labels:
